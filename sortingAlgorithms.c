@@ -80,45 +80,54 @@ void quickSort(int arr[], int low, int high) {
 }
 
 // Merge Sort
-void merge(int arr[], int left, int mid, int right) {
-  int n1 = mid - left + 1;
-  int n2 = right - mid;
+void merge(int arr[], int left, int mid, int right)
+{
+    int i = left;
+    int j = mid + 1;
+    int k = 0;
 
-  int L[n1], R[n2];
+    int temp[right - left + 1];
 
-  for (int i = 0; i < n1; i++)
-    L[i] = arr[left + i];
+    while(i <= mid && j <= right)
+    {
+        if(arr[i] <= arr[j])
+        {
+            temp[k++] = arr[i++];
+        }
+        else
+        {
+            temp[k++] = arr[j++];
+        }
+    }
 
-  for (int i = 0; i < n2; i++)
-    R[i] = arr[mid + 1 + i];
+    while(i <= mid)
+    {
+        temp[k++] = arr[i++];
+    }
 
-  int i = 0, j = 0, k = left;
+    while(j <= right)
+    {
+        temp[k++] = arr[j++];
+    }
 
-  while (i < n1 && j < n2) {
-    if (L[i] <= R[j])
-      arr[k++] = L[i++];
-    else
-      arr[k++] = R[j++];
-  }
-
-  while (i < n1)
-    arr[k++] = L[i++];
-
-  while (j < n2)
-    arr[k++] = R[j++];
+    for(i = 0; i < k; i++)
+    {
+        arr[left + i] = temp[i];
+    }
 }
 
-void mergeSort(int arr[], int left, int right) {
-  if (left < right) {
-    int mid = (left + right) / 2;
+void mergeSort(int arr[], int left, int right)
+{
+    if(left < right)
+    {
+        int mid = left + (right - left) / 2;
 
-    mergeSort(arr, left, mid);
-    mergeSort(arr, mid + 1, right);
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
 
-    merge(arr, left, mid, right);
-  }
+        merge(arr, left, mid, right);
+    }
 }
-
 // Heap Sort
 void heapify(int arr[], int n, int i) {
   int largest = i;
